@@ -1,0 +1,22 @@
+{
+  "contatos": [
+    {
+      "nome": "Lara Melo Rocha Ruas Fernandes",
+      "telefone": "+55 31 9954-4554",
+      "email": "laramrrf@hotmail.com",
+      "cidade": "Belo Horizonte",
+      "categoria": "amigos",
+      "website": "https://github.com/LaraRuas/Diw-trabalho-2/tree/main",
+      "id": 1
+    },
+    {
+      "id": 2,
+      "nome": "João Pedro Figueiredo do Valle",
+      "cidade": "Belo Horizonte",
+      "categoria": "amigos",
+      "email": "joaopedrofvalle@gmail.com",
+      "telefone": "+55 31 9965-4279",
+      "website": "https://github.com/joaopfigo/Reposit-rio"
+    }
+  ]
+}
