@@ -1,132 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta sttp-equiv="X-UA-Compatible" content="IE=edge">
-        <mata name="viewport" content="width=device-width, initial-scale=1,0"></mata>
-        <script src="https://kit.fontawesome.com/3bbc0da062.js" crossorigin="anonymous"></script>
-        <title>Mariana Miyamoto </title>
-        <link rel="stylesheet" href="style.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    </head>
-    <header class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="http://127.0.0.1:5500/mariana_miyamoto_1520602/index.html"> Mariana Miyamoto</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="http://127.0.0.1:5500/mariana_miyamoto_1520602/repo.html">Seção 1</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://github.com/nayupoet/Reposit-rio/tree/main">Seção 2</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Seção 3</a></li>
-                </ul>
+
+<head>
+  <meta charset="UTF-8">
+  <meta sttp-equiv="X-UA-Compatible" content="IE=edge">
+  <mata name="viewport" content="width=device-width, initial-scale=1,0"></mata>
+  <title> Mariana Miyamoto - Site Pessoal</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<header class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="http://127.0.0.1:5500/mariana_miyamoto_1520602/index.html">Mariana Miyamoto</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="http://127.0.0.1:5500/mariana_miyamoto_1520602/repo.html">Seção 1</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://github.com/nayupoet">Seção 2</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://open.spotify.com/user/marianayuna.campos-br">Seção 3</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+
+
+
+
+<body>
+
+  <div>
+    <pre id="json"></pre>
+
+  </div>
+
+  <p id="nomesRepositorio1"></p>
+  <p id="nomesRepositorio2"></p>
+  <p id="nomesRepositorio3"></p>
+  <script type="module">
+
+    import { Octokit, App } from "https://esm.sh/octokit";
+
+    export const octokit = new Octokit({
+      auth: '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',
+    });
+
+
+    const repo = await octokit.request('GET /users/nayupoet', {
+      username: 'nayupoet',
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    });
+
+    const repositorios = await octokit.request('GET /users/nayupoet/repos', {
+      username: 'nayupoet',
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    });
+
+
+    const nomesRepositorio1 = JSON.stringify(repositorios.data[0].name,null,2);
+    document.getElementById("card1").innerHTML = nomesRepositorio1;
+
+    const nomesRepositorio2 = JSON.stringify(repositorios.data[1].name,null,2);
+    document.getElementById("card2").innerHTML = nomesRepositorio2;
+
+    const nomesRepositorio3 = JSON.stringify(repositorios.data[2].name,null,2);
+    document.getElementById("card3").innerHTML = nomesRepositorio3;
+
+
+
+    const descricaoRepositorio1 = JSON.stringify(repositorios.data[0].description,null,2);
+    document.getElementById("card1descricao").innerHTML = descricaoRepositorio1;
+
+    const descricaoRepositorio2 = JSON.stringify(repositorios.data[1].description,null,2);
+    document.getElementById("card2descricao").innerHTML = descricaoRepositorio2;
+
+    const descricaoRepositorio3 = JSON.stringify(repositorios.data[2].description,null,2);
+    document.getElementById("card3descricao").innerHTML = descricaoRepositorio3;
+
+    const avatar = JSON.stringify(repo.data.avatar_url);
+    document.getElementById("fotoPerfil").src = avatar.replace("\"", " ");
+
+    const nome = JSON.stringify(repo.data.name);
+    document.getElementById("nome").innerHTML = nome.replace("\"", " ").replace("\"", " ");
+
+    const email = JSON.stringify(repo.data.email);
+    document.getElementById("email").innerHTML = email;
+
+
+    const location = JSON.stringify(repo.data.location);
+    document.getElementById("location").innerHTML = location.replace("\"", " ").replace("\"", " ");
+
+    const bio = JSON.stringify(repo.data.bio);
+    document.getElementById("bio").innerHTML = bio.replace("\"", " ").replace("\"", " ");
+
+
+  </script>
+
+
+
+  <section class="container mt-5">
+    <div class="row">
+      <div class="col-md-4">
+        <img id="fotoPerfil" alt="Seu Avatar" class="img-thumbnail">
+      </div>
+
+      <div class="col-md-8">
+        <h2 id="nome">Mariana Miyamoto</h2>
+        <p id="bio"> 
+        </p>
+        <p>
+        <h6 id="email"></h6>
+        <h6 id="location"></h6>
+        </p>
+        <p>
+        <h6>Site</h6> https://github.com/nayupoet
+        </p>
+
+
+
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          <div class="col">
+            <div class="card">
+
+              <div class="card-body">
+                <h5 id="card1" class="Projeto journey">C-sharp</h5>
+                <p id="card1descricao" class="card-text">A Linguagem C# é uma das mais importantes e requisitadas atualmente. É muito versátil e fundamental para currículos. Crucial entender, e aprender, afinal, o C# é uma das três principais tecnologias de programalçao que utilizam a letra \"C\" como representaçã (C e C++ são as outras duas).</p>
+                <a href="https://github.com/nayupoet/C-sharp" class="ATP2">Saiba mais</a>
+              </div>
             </div>
-        </div>
-    </header>
-    
-    <body>
-        <section class="container mt-5">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="https://i.im.ge/2024/06/21/Kpcgwp.IMG-20240505-140729-684-1.jpeg" alt="Seu Avatar" class="img-thumbnail">
+          </div>
+          <div class="col">
+            <div class="card">
+
+              <div class="card-body">
+                <h5 id="card2" class="card-title">CSS</h5>
+                <p id="card2descricao" class="card-text"> CSS é uma Linguagem usada para estilizar elementos em uma linguagem HTML. O mesmo separa o conteúdo da representação do site. Utilizando o CSS, é possivel alterar letras, tamanhos, cores, fundos e fontes. Permite criar tabelas, usar variações de layouts, ajustar imagens e assim por diante.</p>
+                <a href="https://github.com/nayupoet/CSS" class="ATP2">Saiba mais</a>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+
+              <div class="card-body">
+                <h5 id="card3" class="card-title">HTML</h5>
+                <p id="card3descricao" class="card-text">A Linguagem HTML compõe a maior parte das páginas da internet e de aplicativos. O mesmo não é considerado uma linguagem de programação, afinal o mesmo não cria funcionalidades dinâmicas. O HTML permite criar e estruturar seções, parágrafos e links, usando elementos, tags e atributos</p>
+                <a href="https://github.com/notifications" class="ATP2">Saiba mais</a>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+
+
+              <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
                 </div>
-                <div class="col-md-8">
-                    <h2>Mariana Miyamoto</h2>
-                    <p> Olá, eu sou a Mariana, tenho 18 anos e sou graduanda em Sistemas de Informação. Gosto muito de jogos, RPG, ler romances, sejam em mangás, livros, quadrinhos e qualquer coisa. Sou versatilizada em coisas relacionadas a arte, como música, pintura, desenho e escrita (principalmente poesias). Também jogo vôlei na atlética da ICEI, os pinguins da puc. </p>  
-                    <p>Minha cor preferida é preto, mas gosto muito de vermelho e roxo. Meu mbti é ENTP, sou do signo de sagitário, e minha casa de hogwarts é sonserina.</p>
-                    <h6> Localização:</h6> <p> Belo Horizonte, MG, Brazil</p>
-                    <a href="https://www.pucminas.br/unidade/sao-gabriel/Paginas/default.aspx">Site</a>
-                    <br>
-                    <br>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="https://f.hubspotusercontent20.net/hub/7435824/hubfs/Blog_free_images/linguagem-c-software.jpg?width=1920&name=linguagem-c-software.jpg" class="d-block w-100" alt="C#">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="https://files.tecnoblog.net/wp-content/uploads/2021/02/o_que_e_html_pixabay-700x393.jpg" class="d-block w-100" alt="HTML">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="https://www.hostinger.com.br/tutoriais/wp-content/uploads/sites/12/2018/03/como-adicionar-css-no-html-sem-tag.webp" class="d-block w-100" alt="css">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="https://files.tecnoblog.net/wp-content/uploads/2021/01/o_que_e_javascript_pankaj-patel-unsplash-700x466.jpg" class="d-block w-100" alt="jscrt">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
 
-                    <i class="fa-brands fa-facebook"></i>
-                    <i class="fa-brands fa-twitter"></i>
-                    <i class="fa-brands fa-instagram"></i>
-<br>
-<br>
-<br>
-<br>
+        <script>
 
-                    <div class="row row-cols-1 row-cols-md-2 g-4">
-                        <div class="col">
-                          <div class="card">
-                            
-                            <div class="card-body">
-                              <h5 class="card-title"> C#</h5>
-                              <p class="card-text"> A Linguagem C# é uma das mais importantes e requisitadas atualmente. É muito versátil e fundamental para currículos. Crucial entender, e aprender, afinal, o C# é uma das três principais tecnologias de programalçao que utilizam a letra "C" como representaçã (C e C++ são as outras duas). </p>
-                              <a href="https://blog.somostera.com/desenvolvimento-web/linguagem-c" class="ATP1">Saiba mais</a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="card">
-                            
-                            <div class="card-body">
-                              <h5 class="card-title">HTML</h5>
-                              <p class="card-text">A Linguagem HTML compõe a maior parte das páginas da internet e de aplicativos. O mesmo não é considerado uma linguagem de programação, afinal o mesmo não cria funcionalidades dinâmicas. O HTML permite criar e estruturar seções, parágrafos e links, usando elementos, tags e atributos.</p>
-                              <a href="https://www.hostinger.com.br/tutoriais/o-que-e-html-conceitos-basicos" class="ATP2">Saiba mais</a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="card">
-                            
-                            <div class="card-body">
-                              <h5 class="card-title">CSS</h5>
-                              <p class="card-text">CSS é uma Linguagem usada para estilizar elementos em uma linguagem HTML. O mesmo separa o conteúdo da representação do site. Utilizando o CSS, é possivel alterar letras, tamanhos, cores, fundos e fontes. Permite criar tabelas, usar variações de layouts, ajustar imagens e assim por diante.</p>
-                              <a href="https://www.hostinger.com.br/tutoriais/o-que-e-css-guia-basico-de-css" class="ATP3">Saiba mais</a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="card">
-                            
-                            <div class="card-body">
-                              <h5 class="card-title">JavaScript</h5>
-                              <p class="card-text">JavaScript é uma linguagem de programação que permite a você implementar itens complexos em paginas web, mostrando conteúdo que se atualiza, mapas interativos, gráficos interativos 2D/3D animados e etc. Tal linguagem complementa HTML e o CSS, funcionando perfeitamente juntos.</p>
-                              <a href="https://developer.mozilla.org/pt-BR/docs/Learn/JavaScript/First_steps/What_is_JavaScript" class="ATP4">Saiba mais</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <br>
-                      <br>
+        </script>
+</body>
 
-                      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-indicators">
-                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                        </div>
-                        <div class="carousel-inner">
-                          <div class="carousel-item active">
-                            <img src="https://f.hubspotusercontent20.net/hub/7435824/hubfs/Blog_free_images/linguagem-c-software.jpg?width=1920&name=linguagem-c-software.jpg" class="d-block w-100" alt="C#">
-                          </div>
-                          <div class="carousel-item">
-                            <img src="https://files.tecnoblog.net/wp-content/uploads/2021/02/o_que_e_html_pixabay-700x393.jpg" class="d-block w-100" alt="HTML">
-                          </div>
-                          <div class="carousel-item">
-                            <img src="https://www.hostinger.com.br/tutoriais/wp-content/uploads/sites/12/2018/03/como-adicionar-css-no-html-sem-tag.webp" class="d-block w-100" alt="css">
-                          </div>
-                          <div class="carousel-item">
-                            <img src="https://files.tecnoblog.net/wp-content/uploads/2021/01/o_que_e_javascript_pankaj-patel-unsplash-700x466.jpg" class="d-block w-100" alt="jscrt">
-                          </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                        </button>
-                      </div>
-                      <br>
-                      <br>
-    </body>
-    
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>
